@@ -1,47 +1,41 @@
 ﻿
-@using (Html.BeginForm("NumbersIndex", "Home", FormMethod.Get))
+@using (Html.BeginForm("Numbers", "Home", FormMethod.Get))
 {
-    <div style="width:100%;background-color:rgba(255, 255, 255, 0.5);border-radius:25px;">
-        <div style="width:300px; margin:0 auto; padding-bottom:10px;">
-            <fieldset>
-                <legend>Search</legend>
-                @Html.Label("Year")
-                @{
-                    List<SelectListItem> listItems = new List<SelectListItem>();
-                    listItems.Add(new SelectListItem { Text = "2014-2015", Value = "0", Selected = true });
-                    listItems.Add(new SelectListItem { Text = "2013-2014", Value = "1", });
-                    listItems.Add(new SelectListItem { Text = "2012-2013", Value = "2" });
-                    listItems.Add(new SelectListItem { Text = "2011-2012", Value = "3" });
-                    listItems.Add(new SelectListItem { Text = "2010-2011", Value = "4" });
-                    listItems.Add(new SelectListItem { Text = "2009-2010", Value = "5" });
-                    listItems.Add(new SelectListItem { Text = "2008-2009", Value = "6" });
-                    listItems.Add(new SelectListItem { Text = "2007-2008", Value = "7" });
-                    listItems.Add(new SelectListItem { Text = "2006-2007", Value = "8" });
-                    listItems.Add(new SelectListItem { Text = "2005-2006", Value = "9" });
-                    listItems.Add(new SelectListItem { Text = "2004-2005", Value = "10" });
-                    listItems.Add(new SelectListItem { Text = "2003-2004", Value = "11" });
-                    listItems.Add(new SelectListItem { Text = "2002-2003", Value = "12" });
-
-                }
-                @Html.DropDownList("year", listItems)
-                <br />
-                @Html.Label("Campus")
-                @{
-                    List<SelectListItem> campusItems = new List<SelectListItem>();
-                    campusItems.Add(new SelectListItem { Text = "All", Value = "0", Selected = true });
-                    campusItems.Add(new SelectListItem { Text = "Ann Arbor", Value = "1", });
-                    campusItems.Add(new SelectListItem { Text = "Flint", Value = "2" });
-                    campusItems.Add(new SelectListItem { Text = "Dearborn", Value = "3" });
-
-                }
-                @Html.DropDownList("campus", campusItems)
-
-                <br />
+    <div style="width:100%;background-color:rgba(255, 255, 255, 0.85);border-radius:25px;">
+        <div style="width:300px; margin:0 auto; padding-bottom:10px; padding-top:10px;">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="year">Select Year</label>
+                    <select class="form-control" id="year" name="year">
+                        <option value='0'>2014-2015</option>
+                        <option value='1'>2013-2014</option>
+                        <option value='2'>2012-2013</option>
+                        <option value='3'>2011-2012</option>
+                        <option value='4'>2010-2011</option>
+                        <option value='5'>2009-2010</option>
+                        <option value='6'>2008-2009</option>
+                        <option value='7'>2007-2008</option>
+                        <option value='8'>2006-2007</option>
+                        <option value='9'>2005-2006</option>
+                        <option value='10'>2004-2005</option>
+                        <option value='11'>2003-2004</option>
+                        <option value='12'>2002-2003</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="campus">Select Campus</label>
+                    <select class="form-control" id="campus" name="campus">
+                        <option value="0">All</option>
+                        <option value="1">Ann Arbor</option>
+                        <option value="2">Flint</option>
+                        <option value="3">Dearborn</option>
+                    </select>
+                </div>
                 <input type="submit" value="Search" class="formbutton" />
-            </fieldset>
+            </form>
         </div>
-    </div>
-                    }
+    </div><br />
+}
 @if (Model != null)
 {
     <div style="width:100%;background-color:rgba(157, 157, 157,0.90);border-radius:25px;">
