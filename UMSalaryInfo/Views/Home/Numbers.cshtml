@@ -42,6 +42,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Name</th>
                     <th>Title</th>
                     <th>Department</th>
@@ -49,13 +50,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @for(var i=0; i<Model.Count;i++)
                 {
+                    var c = i + 1;
                     <tr>
-                        <td> @item.Name</td>
-                        <td>@item.Title</td>
-                        <td>@item.Department</td>
-                        <td>@item.Salary</td>
+                        <td> @c</td>
+                        <td> @Model[i].Name</td>
+                        <td>@Model[i].Title</td>
+                        <td>@Model[i].Department</td>
+                        <td>@Model[i].Salary</td>
                     </tr>
                 }
             </tbody>
