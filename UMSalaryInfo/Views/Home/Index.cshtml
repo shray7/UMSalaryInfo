@@ -1,16 +1,12 @@
 ﻿@using (Html.BeginForm("Search", "Home", FormMethod.Get))
 {
     <div style="width:100%;background-color:rgba(255, 255, 255, 0.85);border-radius:25px;">
-        <div style="width:300px; margin:0 auto; padding-bottom:10px; padding-top:10px;">
+        <div style="width:300px;margin:0 auto; padding-bottom:10px; padding-top:10px;">
 
-            <form class="form-inline">
+            <form class="form-inline" role="form">
                 <div class="form-group">
                     <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname">
-                </div>
-                <div class="form-group">
                     <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname">
-                </div>
-                <div class="form-group">
                     <label for="year">Select Year</label>
                     <select class="form-control" id="year" name="year">
                         <option value='0'>2014-2015</option>
@@ -27,8 +23,6 @@
                         <option value='11'>2003-2004</option>
                         <option value='12'>2002-2003</option>
                     </select>
-                </div>
-                <div class="form-group">
                     <label for="campus">Select Campus</label>
                     <select class="form-control" id="campus" name="campus">
                         <option value="0">All</option>
@@ -36,8 +30,8 @@
                         <option value="2">Flint</option>
                         <option value="3">Dearborn</option>
                     </select>
+                    <input type="submit" value="Search" class="formbutton" />
                 </div>
-                <input type="submit" value="Search" class="formbutton" />
             </form>
         </div>
     </div>

@@ -34,7 +34,8 @@ namespace UMSalaryInfo.Controllers
                 var salaryList = JsonConvert.DeserializeObject<List<Salary>>(text);
                 foreach (var item in salaryList)
                 {
-                    item.FTR = string.Format("{0:c}", decimal.Parse(item.FTR));
+                    if (!string.IsNullOrEmpty(item.FTR))
+                        item.FTR = string.Format("{0:c}", decimal.Parse(item.FTR));
                     if (!string.IsNullOrEmpty(item.GF))
                         item.GF = string.Format("{0:c}", decimal.Parse(item.GF));
                 }
