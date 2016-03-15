@@ -25,6 +25,7 @@
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("Search By Title", "SearchSalaryByTitleIndex", "Home")</li>
                         <li>@Html.ActionLink("Interesting Numbers", "Numbers", "Home")</li>
+                        <li>@Html.ActionLink("List of Departments", "Index", "Department")</li>
                     </ul>
                 </div>
             </div>
@@ -37,8 +38,14 @@
             </footer>
         </div>
     </div>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
+    <script src="~/Scripts/defaultapp.js"></script>
+    <script src="~/Scripts/departmentApp.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/DataTables")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
