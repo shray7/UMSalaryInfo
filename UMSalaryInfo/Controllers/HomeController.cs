@@ -15,9 +15,10 @@ namespace UMSalaryInfo.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult Search(string fname, string lname, int year, int campus)
+        public ActionResult Search(string name, string year)
         {
-            string url = @"http://salaryapi.azurewebsites.net/api/Salary/GetSalary?firstName=" + fname + "&lastName=" + lname + "&year=" + year + "&campus=" + campus;
+            ViewBag.name = name;
+            string url = @"http://localhost:39016/api/Salary/GetSalaryFromDb?name=" + name + "&year=" + year;
             string text;
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json charset=utf-8";
@@ -45,7 +46,37 @@ namespace UMSalaryInfo.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public string AngularSearch(string name, string year)
+        {
+            string url = @"http://localhost:39016/api/Salary/GetSalaryFromDb?name=" + name + "&year=" + year;
+            string text;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.ContentType = "application/json charset=utf-8";
 
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var resStream = response.GetResponseStream();
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                text = sr.ReadToEnd();
+            }
+            if (!text.Contains("null"))
+            {
+                var salaryList = JsonConvert.DeserializeObject<List<Salary>>(text);
+                foreach (var item in salaryList)
+                {
+                    if (!string.IsNullOrEmpty(item.FTR))
+                        item.FTR = string.Format("{0:c}", decimal.Parse(item.FTR));
+                    if (!string.IsNullOrEmpty(item.GF))
+                        item.GF = string.Format("{0:c}", decimal.Parse(item.GF));
+                }
+
+
+                return new JavaScriptSerializer().Serialize(salaryList);
+            }
+            return null;
+        }
         [HttpGet]
         public ActionResult SearchSalaryByTitleIndex()
         {
