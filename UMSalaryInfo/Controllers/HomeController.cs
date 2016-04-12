@@ -83,11 +83,11 @@ namespace UMSalaryInfo.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult SearchSalaryByTitle(string title = "", int year = 0, int campus = 0)
+        public ActionResult SearchSalaryByTitle(string title, string year)
         {
-            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(year.ToString()) && !string.IsNullOrEmpty(campus.ToString()))
+            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(year.ToString()))
             {
-                string url = @"http://salaryapi.azurewebsites.net/api/Salary/GetSalaryByTitle?titlesearch=" + title + "&year=" + year + "&campus=" + campus;
+                string url = @"http://localhost:39016/api/Salary/GetSalaryByTitleFromDb?title=" + title + "&year=" + year;
                 string text;
                 var request = (HttpWebRequest)WebRequest.Create(url);
                 request.ContentType = "application/json charset=utf-8";
@@ -107,7 +107,33 @@ namespace UMSalaryInfo.Controllers
 
             return View();
         }
+        [HttpGet]
+        public string AngularSearchSalaryByTitle(string title, string year)
+        {
+            string url = @"http://localhost:39016/api/Salary/GetSalaryByTitleFromDb?title=" + title + "&year=" + year;
+            string text;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.ContentType = "application/json charset=utf-8";
 
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var resStream = response.GetResponseStream();
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                text = sr.ReadToEnd();
+            }
+
+            var salaryList = JsonConvert.DeserializeObject<List<Salary>>(text);
+            foreach (var item in salaryList)
+            {
+                if (!string.IsNullOrEmpty(item.FTR))
+                    item.FTR = string.Format("{0:c}", decimal.Parse(item.FTR));
+                if (!string.IsNullOrEmpty(item.GF))
+                    item.GF = string.Format("{0:c}", decimal.Parse(item.GF));
+            }
+
+            return new JavaScriptSerializer().Serialize(salaryList);
+        }
         [HttpGet]
         public ActionResult NumbersIndex()
         {

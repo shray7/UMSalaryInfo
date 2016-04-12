@@ -1,7 +1,7 @@
 ﻿@using (Html.BeginForm("SearchSalaryByTitle", "Home", FormMethod.Get))
 {
-    <div style="width:100%;background-color:rgba(255, 255, 255, 0.85);border-radius:25px;">
-        <div style="width:300px; margin:0 auto; padding-bottom:10px; padding-top:10px;">
+    <div style="background-color:rgba(255, 255, 255, 0.85);border-radius:25px;display:none">
+        <div style="padding-bottom:10px; padding-top:10px;">
             <form class="form-inline">
                 <div class="form-group">
                     <input type="text" class="form-control" id="title" placeholder="Title" name="title">
@@ -24,17 +24,97 @@
                         <option value='12'>2002-2003</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="campus">Select Campus</label>
-                    <select class="form-control" id="campus" name="campus">
-                        <option value="0">All</option>
-                        <option value="1">Ann Arbor</option>
-                        <option value="2">Flint</option>
-                        <option value="3">Dearborn</option>
-                    </select>
-                </div>
                 <input type="submit" value="Search" class="formbutton" />
             </form>
         </div>
     </div>
+    <div ng-app="TitleSearchapp">
+        <div ng-controller="HomeController">
+            <div style="width:100%;margin:0 auto;background-color:rgba(255, 255, 255, 0.85);border-radius:25px;">
+                <div style="width:450px;margin:0 auto; padding-bottom:10px; padding-top:10px;">
+                    <form class="form-inline" role="form" method="get">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="searchTitle" style="width:auto" placeholder="Title">
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Year:</label>
+                            <select class="form-control" id="searchYear" name="year">
+                                <option value='2015-2016'>2015-2016</option>
+                                <option value='2014-2015'>2014-2015</option>
+                                <option value='2013-2014'>2013-2014</option>
+                                <option value='2012-2013'>2012-2013</option>
+                                <option value='2011-2012'>2011-2012</option>
+                                <option value='2010-2011'>2010-2011</option>
+                                <option value='2009-2010'>2009-2010</option>
+                                <option value='2008-2009'>2008-2009</option>
+                                <option value='2007-2008'>2007-2008</option>
+                                <option value='2006-2007'>2006-2007</option>
+                                <option value='2005-2006'>2005-2006</option>
+                                <option value='2004-2005'>2004-2005</option>
+                                <option value='2003-2004'>2003-2004</option>
+                                <option value='2002-2003'>2002-2003</option>
+                            </select>
+                        </div>
+                        <input type="submit" value="Search" class="formbutton" style="align-self:center;width:auto" ng-click="Search()" />
+                    </form>
+                </div>
+            </div>
+            <div style="width:100%;background-color:rgba(157, 157, 157,0.90);border-radius:25px;" ng-show="showTable">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th># People With Title </th>
+                            <th>Maximum Salary</th>
+                            <th>Minimum Salary</th>
+                            <th>Average Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{numberOfPeopleWithTitle}} </td>
+                            <td>${{max}}</td>
+                            <td>${{min}}</td>
+                            <td>${{average}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-show="loading">
+                <img src="~/Content/spinner.gif" alt="Loading" align="middle" title="Loading" style="margin:0 auto; padding-bottom:10px; padding-top:10px;" />
+            </div>
+            <div style="width:100%;background-color:rgba(157, 157, 157,0.90);border-radius:25px;" ng-show="showTable">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name </th>
+                            <th>Title</th>
+                            <th>Department</th>
+                            <th>FTR</th>
+                            <th>GF</th>
+                            <th>Year</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in resultList">
+                            <td> {{item.Name}}</td>
+                            <td> {{item.Title}}</td>
+                            <td> {{item.Department}}</td>
+                            <td> {{item.FTR}}</td>
+                            <td> {{item.GF}}</td>
+                            <td> {{item.Year}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="width:100%;background-color:rgba(255, 255, 255, 0.5);border-radius:25px;" ng-show="showNoResults">
+                <p>No results found</p>
+            </div>
+        </div>
+    </div>
 }
+
+
+
+

@@ -7,27 +7,20 @@ defaultapp.controller('HomeController', function ($scope, $http) {
         var select = document.getElementById('searchYear');
         var year = select.value;
         $scope.loading = true;
-        $scope.zeroResult = false;
+        $scope.showTable = false;
+        $scope.showNoResults = false;
         $http({ method: 'GET', url: '/home/AngularSearch', params: { name: name, year: year } }).
-      success(function (data, status, headers, config) {
-          $scope.resultList = data;
-          $scope.loading = false;
-          if ($scope.resultCount.length == 0)
-              $scope.zeroResult = true;
-          console.log(data);
-      }).
-      error(function (data, status, headers, config) {
-          console.log("error");
-      });
+            success(function (data, status, headers, config) {
+                $scope.resultList = data;
+                $scope.loading = false;
+                if ($scope.resultList.length > 0)
+                    $scope.showTable = true;
+                else
+                    $scope.showNoResults = true;
+                console.log(data);
+            }).
+            error(function (data, status, headers, config) {
+                console.log("error");
+            });
     }
 });
-
-defaultapp.factory('StudentService', ['$http', function ($http) {
-
-    var StudentService = {};
-    StudentService.getStudents = function () {
-        return $http.get('/Home/Search');
-    };
-    return StudentService;
-
-}]);
