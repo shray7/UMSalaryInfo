@@ -1197,6 +1197,7 @@
     <Content Include="Scripts\Angular\version.json" />
     <Content Include="Views\Department\Index.cshtml" />
     <Content Include="Scripts\jquery-2.2.1.min.map" />
+    <Content Include="umsalaryinfo.azurewebsites.net.PublishSettings" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
