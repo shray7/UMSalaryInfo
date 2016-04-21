@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body class="bgig">
+<body class="bgig" id="mainbody">
     <div >
         <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:#00274c">
             <div class="container">
@@ -29,6 +29,7 @@
                         <li>@Html.ActionLink("Employee History", "EmployeeHistory", "Home")</li>
                         <li>@Html.ActionLink("Contact Me", "Index", "Contact")</li>
                     </ul>
+                    <div onclick="changeStyle()">Change</div>
                 </div>
             </div>
         </div>
@@ -47,6 +48,7 @@
     <script src="~/Scripts/TitleSearchapp.js"></script>
     <script src="~/Scripts/NumbersApp.js"></script>
     <script src="~/Scripts/EmployeeHistoryApp.js"></script>
+    <script src="~/Scripts/BackgroundSwitch.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/DataTables")
