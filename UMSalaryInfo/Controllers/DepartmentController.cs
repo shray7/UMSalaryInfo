@@ -1,10 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace UMSalaryInfo.Controllers
@@ -14,7 +9,7 @@ namespace UMSalaryInfo.Controllers
         // GET: Department
         public ActionResult Index()
         {
-            string url = @"http://localhost:39016//api/Department/GetDepartmentsFromDb";
+            string url = @"http://salaryapi.azurewebsites.net/api/Department/GetDepartmentsFromDb";
             string text;
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json charset=utf-8";
@@ -32,7 +27,7 @@ namespace UMSalaryInfo.Controllers
         }
         public string Get()
         {
-            string url = @"http://localhost:39016//api/Department/GetDepartmentsFromDb";
+            string url = @"http://salaryapi.azurewebsites.net/api/Department/GetDepartmentsFromDb";
             string text;
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json charset=utf-8";

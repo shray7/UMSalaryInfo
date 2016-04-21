@@ -23,4 +23,27 @@ defaultapp.controller('HomeController', function ($scope, $http) {
                 console.log("error");
             });
     }
+    $scope.showModal = false;
+    $scope.childName = "";
+    $scope.PopModal = function (name) {
+        $scope.childResultList = null;
+        $scope.childName = name;
+        $scope.showModal = true;
+        console.log(name);
+        $http({ method: 'GET', url: '/home/AngularEmployeeSearch', params: { name: name } }).
+            success(function (data, status, headers, config) {
+                $scope.childResultList = data;
+                $scope.loading = false;
+                if ($scope.childResultList.length > 0)
+                    $scope.showTable = true;
+                else
+                    $scope.showNoResults = true;
+                console.log(data);
+            }).
+            error(function (data, status, headers, config) {
+                console.log("error");
+            });
+
+    }
+
 });

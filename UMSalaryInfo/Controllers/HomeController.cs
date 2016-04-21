@@ -18,7 +18,7 @@ namespace UMSalaryInfo.Controllers
         public ActionResult Search(string name, string year)
         {
             ViewBag.name = name;
-            string url = @"http://localhost:39016/api/Salary/GetSalaryFromDb?name=" + name + "&year=" + year;
+            string url = @"http://salaryapi.azurewebsites.net/api/Salary/GetSalaryFromDb?name=" + name + "&year=" + year;
             string text;
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json charset=utf-8";
@@ -49,7 +49,7 @@ namespace UMSalaryInfo.Controllers
         [HttpGet]
         public string AngularSearch(string name, string year)
         {
-            string url = @"http://localhost:39016/api/Salary/GetSalaryFromDb?name=" + name + "&year=" + year;
+            string url = @"http://salaryapi.azurewebsites.net/api/Salary/GetSalaryFromDb?name=" + name + "&year=" + year;
             string text;
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json charset=utf-8";
@@ -87,7 +87,7 @@ namespace UMSalaryInfo.Controllers
         {
             if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(year.ToString()))
             {
-                string url = @"http://localhost:39016/api/Salary/GetSalaryByTitleFromDb?title=" + title + "&year=" + year;
+                string url = @"http://salaryapi.azurewebsites.net/api/Salary/GetSalaryByTitleFromDb?title=" + title + "&year=" + year;
                 string text;
                 var request = (HttpWebRequest)WebRequest.Create(url);
                 request.ContentType = "application/json charset=utf-8";
@@ -110,7 +110,7 @@ namespace UMSalaryInfo.Controllers
         [HttpGet]
         public string AngularSearchSalaryByTitle(string title, string year)
         {
-            string url = @"http://localhost:39016/api/Salary/GetSalaryByTitleFromDb?title=" + title + "&year=" + year;
+            string url = @"http://salaryapi.azurewebsites.net/api/Salary/GetSalaryByTitleFromDb?title=" + title + "&year=" + year;
             string text;
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/json charset=utf-8";
@@ -161,7 +161,68 @@ namespace UMSalaryInfo.Controllers
             return View(salaryList);
 
         }
+
+        [HttpGet]
+        public string AngularNumbers(string year)
+        {
+            string url = @"http://salaryapi.azurewebsites.net/api/Salary/GetHighestSalaryFromDb?" + "year=" + year;
+            string text;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.ContentType = "application/json charset=utf-8";
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var resStream = response.GetResponseStream();
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                text = sr.ReadToEnd();
+            }
+
+            var salaryList = JsonConvert.DeserializeObject<List<Salary>>(text);
+            foreach (var item in salaryList)
+            {
+                if (!string.IsNullOrEmpty(item.FTR))
+                    item.FTR = string.Format("{0:c}", decimal.Parse(item.FTR));
+                if (!string.IsNullOrEmpty(item.GF))
+                    item.GF = string.Format("{0:c}", decimal.Parse(item.GF));
+            }
+            return new JavaScriptSerializer().Serialize(salaryList);
+        }
+        [HttpGet]
+        public ActionResult EmployeeHistory()
+        {
+            return View();
+        }
+        [HttpGet]
+        public string AngularEmployeeSearch(string name)
+        {
+            string url = @"http://salaryapi.azurewebsites.net/api/Salary/GetSalaryByNameAllYearsFromDb?" + "name=" + name;
+            string text;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.ContentType = "application/json charset=utf-8";
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var resStream = response.GetResponseStream();
+            using (var sr = new StreamReader(response.GetResponseStream()))
+            {
+                text = sr.ReadToEnd();
+            }
+
+            var salaryList = JsonConvert.DeserializeObject<List<Salary>>(text);
+            foreach (var item in salaryList)
+            {
+                if (!string.IsNullOrEmpty(item.FTR))
+                    item.FTR = string.Format("{0:c}", decimal.Parse(item.FTR));
+                if (!string.IsNullOrEmpty(item.GF))
+                    item.GF = string.Format("{0:c}", decimal.Parse(item.GF));
+            }
+            return new JavaScriptSerializer().Serialize(salaryList);
+        }
     }
+
+    
+    
 
     public class Salary
     {
